@@ -1,12 +1,18 @@
+from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
-from fastapi import FastAPI, Depends, HTTPException
-from schemas import APIResponse, UserRequest, UserResponse
-from database import load_database, engine
+
+from database import engine, load_database
 from models import BaseModel, User
+from schemas import APIResponse, UserRequest, UserResponse
 
 BaseModel.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+
+@app.get("/health")
+def healthCheck():
+    return {"status": "awake"}
 
 
 @app.post("/signup")
