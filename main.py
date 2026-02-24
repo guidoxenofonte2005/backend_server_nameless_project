@@ -10,8 +10,8 @@ BaseModel.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
-@app.get("/health")
-def healthCheck():
+@app.get("/health", methods=["GET", "HEAD"])
+async def healthCheck():
     return {"status": "awake"}
 
 
